@@ -7,33 +7,51 @@
         </div>
         <div class="card-body">
           <form id="knight-form" @submit.prevent="save">
-            <div class="form-group" v-for="(input, index) in formInputs" :key="index">
-              <label :for="input.id">{{ input.label }}:</label>
-              <input :type="input.type" :id="input.id" v-model="newKnight[input.model]" :placeholder="input.placeholder">
+            <div class="form-group row" v-for="(input, index) in formInputs" :key="index">
+              <label class="col-md-2 col-form-label" :for="input.id">{{ input.label }}:</label>
+              <div class="col-md-4">
+                <input :type="input.type" :id="input.id" v-model="newKnight[input.model]" :placeholder="input.placeholder">
+              </div>
             </div>
-            <div class="form-group">
-              <label for="keyAttribute">Key Attribute:</label>
-              <select id="keyAttribute" v-model="newKnight.keyAttribute">
-                <option v-for="(attribute, index) in attributes" :value="attribute" :key="index">{{ attribute }}</option>
-              </select>
+            <div class="form-group row">
+              <label class="col-md-2 col-form-label" for="keyAttribute">Key Attribute:</label>
+              <div class="col-md-4">
+                <select id="keyAttribute" v-model="newKnight.keyAttribute">
+                  <option v-for="(attribute, index) in attributes" :value="attribute" :key="index">{{ attribute }}</option>
+                </select>
+              </div>
             </div>
-            <div class="weapons-container">
-              <div v-for="(weapon, index) in newKnight.weapons" :key="index">
-                <div class="input-container weapon">
-                  <label for="weapon-name">Weapon Name:</label>
-                  <input type="text" v-model="weapon.name" placeholder="Enter weapon's name">
-                  <label for="weapon-mod">Mod:</label>
-                  <input type="number" v-model="weapon.mod">
-                  <label for="weapon-attr">Attribute:</label>
-                  <select v-model="weapon.attr">
-                    <option v-for="(attribute, index) in attributes" :value="attribute" :key="index">{{ attribute }}</option>
-                  </select>
-                  <button type="button" @click="removeWeapon(index)">Remove</button>
+            <div class="weapons-container row">
+              <div class="col-md-12" v-for="(weapon, index) in newKnight.weapons" :key="index">
+                <div class="input-container weapon row">
+                  <div class="col-md-4">
+                    <label for="weapon-name">Weapon Name:</label>
+                    <input type="text" v-model="weapon.name" placeholder="Enter weapon's name">
+                  </div>
+                  <div class="col-md-4">
+                    <label for="weapon-mod">Mod:</label>
+                    <input type="number" v-model="weapon.mod">
+                  </div>
+                  <div class="col-md-3">
+                    <label for="weapon-attr">Attribute:</label>
+                    <select v-model="weapon.attr">
+                      <option v-for="(attribute, index) in attributes" :value="attribute" :key="index">{{ attribute }}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-10">
+                    <button type="button" class="btn btn-danger col-md-2" @click="removeWeapon(index)">Remove</button>
+                  </div>
                 </div>
               </div>
             </div>
-            <button type="button" @click="addWeapon">Add Weapon</button>
-            <button type="submit">Save</button>
+            <div class="button-container row">
+              <div class="col-md-3">
+                <button type="button" class="btn btn-info" @click="addWeapon">Add Weapon</button>
+              </div>
+              <div class="col-md-4">
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </div>
           </form>
         </div>
       </div>
@@ -144,7 +162,7 @@ export default {
         name: '',
         mod: 0,
         attr: '',
-        equipped: true
+        equipped: false
       },
       formInputs: [
         { id: "name", label: "Name", type: "text", model: "name", placeholder: "Enter knight's name" },
@@ -170,6 +188,7 @@ export default {
       this.newWeapon.name = '';
       this.newWeapon.mod = 0;
       this.newWeapon.attr = '';
+      this.newWeapon.equipped = false;
     },
     calculateAge(birthday) {
       const today = new Date();
@@ -294,5 +313,10 @@ button {
 }
 button:hover {
   background-color: #0056b3;
+}
+div 
+.card-header{
+  background-color:darkgray;
+  border-radius: 5px;
 }
 </style>
